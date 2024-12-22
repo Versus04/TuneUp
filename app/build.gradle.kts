@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    kotlin("plugin.serialization") version "2.0.21"
 }
 
 android {
@@ -40,13 +41,21 @@ android {
 }
 
 dependencies {
-    //coil
-    implementation("io.coil-kt.coil3:coil-compose:3.0.4")
-    implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.4")
-    //Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.11.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    val nav_version = "2.8.5"
+    val coil_version = "3.0.4"
+    val retrofit_version = "2.11.0"
     val media3_version = "1.2.1"
+    //coil
+    implementation("io.coil-kt.coil3:coil-compose:${coil_version}")
+    implementation("io.coil-kt.coil3:coil-network-okhttp:${coil_version}")
+
+    //navigation
+    implementation("androidx.navigation:navigation-compose:${nav_version}")
+    
+    //Retrofit
+    implementation("com.squareup.retrofit2:retrofit:${retrofit_version}")
+    implementation("com.squareup.retrofit2:converter-gson:${retrofit_version}")
+
 
     // For media playback using ExoPlayer
     implementation("androidx.media3:media3-exoplayer:$media3_version")

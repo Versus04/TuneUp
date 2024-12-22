@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.tuneup.screens.MainScreen
 import com.example.tuneup.screens.tempo
 import com.example.tuneup.ui.theme.TuneUpTheme
 import com.example.tuneup.viewmodels.musicViewModel
@@ -24,7 +25,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TuneUpTheme {
-                tempo(viewModel , modifier = Modifier.statusBarsPadding())
+                MainScreen(viewModel, modifier = Modifier.statusBarsPadding())
             }
         }
     }
