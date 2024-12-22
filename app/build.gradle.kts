@@ -46,12 +46,19 @@ dependencies {
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    val media3_version = "1.2.1"
 
-    //Exoplayer
-    implementation("androidx.media3:media3-exoplayer:1.5.1")
-    implementation("androidx.media3:media3-ui:1.5.1")
-    implementation("androidx.media3:media3-common:1.5.1")
-    implementation("androidx.media3:media3-session:1.5.1")
+    // For media playback using ExoPlayer
+    implementation("androidx.media3:media3-exoplayer:$media3_version")
+    // For DASH playback support
+    implementation("androidx.media3:media3-exoplayer-dash:$media3_version")
+    // For HLS playback support
+    implementation("androidx.media3:media3-exoplayer-hls:$media3_version")
+    // For RTSP playback support
+    implementation("androidx.media3:media3-exoplayer-rtsp:$media3_version")
+    // For UI components
+    implementation("androidx.media3:media3-ui:$media3_version")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
