@@ -2,6 +2,7 @@ package com.example.tuneup.viewmodels
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tuneup.model.Data
@@ -18,8 +19,9 @@ class musicViewModel : ViewModel()
 {
     private val _SongDto = MutableStateFlow<List<Data>>(emptyList())
     val songDto : StateFlow<List<Data>> = _SongDto
-    private val _searchSong = MutableStateFlow("")
-    val searchSong =_searchSong.asStateFlow()
+    private var _searchSong = MutableStateFlow("")
+    var searchSong =_searchSong.asStateFlow()
+
 
     private val _searchResult = MutableStateFlow<List<searchResult>>(emptyList())
     val searchResult : StateFlow<List<searchResult>> = _searchResult
@@ -59,8 +61,10 @@ class musicViewModel : ViewModel()
             }
         }
     }
+    fun updateSearch(newValue : String)
+    {
+        _searchSong.value=newValue
 
-    init {
-        searchSongs("baarish")
     }
+
 }
