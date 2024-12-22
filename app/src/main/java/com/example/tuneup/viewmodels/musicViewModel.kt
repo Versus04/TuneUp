@@ -1,21 +1,28 @@
 package com.example.tuneup.viewmodels
 
 import android.util.Log
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tuneup.model.Data
+import com.example.tuneup.model.SearchDTO
 import com.example.tuneup.model.SongDTO
+import com.example.tuneup.model.searchResult
 import com.example.tuneup.network.MusicApiService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class musicViewModel : ViewModel()
 {
     private val _SongDto = MutableStateFlow<List<Data>>(emptyList())
     val songDto : StateFlow<List<Data>> = _SongDto
+    private val _searchSong = MutableStateFlow("")
+    val searchSong =_searchSong.asStateFlow()
 
-
+    private val _searchResult = MutableStateFlow<List<searchResult>>(emptyList())
+    val searchResult : StateFlow<List<searchResult>> = _searchResult
     fun getSong()
     {
         viewModelScope.launch()
@@ -36,8 +43,24 @@ class musicViewModel : ViewModel()
             }
         }
     }
+    fun searchSongs(searchResult: String)
+    {
+        viewModelScope.launch()
+        {
+            try {
+                val searchResponses = MusicApiService.retrofitService.searchSong(searchResult)
+                searchResponses.body()?.let {search->
+                    _searchResult.value = search.data.results
+                }
+            }
+            catch (e: Exception)
+            {
+                Log.d("searchError", e.toString())
+            }
+        }
+    }
 
     init {
-        getSong()
+        searchSongs("baarish")
     }
 }
