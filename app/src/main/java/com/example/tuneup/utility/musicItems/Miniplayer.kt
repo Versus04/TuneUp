@@ -1,6 +1,7 @@
 package com.example.tuneup.utility.musicItems
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,7 +30,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil3.compose.AsyncImage
+import com.example.tuneup.screens.Screens
 import com.example.tuneup.utility.AudioPlayer
 
 @Composable
@@ -39,7 +42,7 @@ fun MiniPlayer(
     artistName: String,
     imageUrl: String?,
     modifier: Modifier = Modifier,
-    expand :()-> Unit,
+    navController: NavController,
     playorpause :()-> Unit ,
     isPlaying : Boolean
 
@@ -47,7 +50,7 @@ fun MiniPlayer(
     Surface(
         modifier = modifier
             .fillMaxWidth()
-            .height(64.dp),
+            .height(64.dp).clickable(enabled = true , onClick = {navController.navigate(Screens.FullMusicPlayer.route)}),
         color = MaterialTheme.colorScheme.surface,
         tonalElevation = 4.dp
     ) {
@@ -113,8 +116,7 @@ fun MiniPlayer(
             }
 
             // Controls
-            val icons = Icons.Default.PlayArrow
-            val icons2 = Icons.Default.Refresh
+
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically

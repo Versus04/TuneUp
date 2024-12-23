@@ -64,7 +64,7 @@ fun MainScreen(viewModel: musicViewModel , modifier: Modifier)
                     songName = currentSong.value.name,
                     artistName = currentSong.value.artists.primary.firstOrNull()?.name ?: "Unknown Artist",
                     imageUrl = currentSong.value.image.firstOrNull()?.url, Modifier,
-                    { viewModel.updatePlaying() },
+                    navController,
                     { viewModel.updatePlaying() },
                     playingvalue.value
                 )
@@ -103,6 +103,10 @@ fun MainScreen(viewModel: musicViewModel , modifier: Modifier)
             composable(Screens.Settings.route)
             {
                 settingScreen(modifier)
+            }
+            composable(Screens.FullMusicPlayer.route)
+            {
+                FullMusicPlayer(currentSong.value)
             }
         }
 

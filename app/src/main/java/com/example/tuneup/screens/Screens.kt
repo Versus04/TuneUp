@@ -12,5 +12,6 @@ sealed class Screens(val route : String , val title : String , val icon : ImageV
     object Settings : Screens("settings","Settings", Icons.Default.Settings)
     object Library : Screens("library","Library", Icons.Default.PlayArrow)
     object SearchPage : Screens("searchPage","Search", Icons.Default.Search)
+    object FullMusicPlayer : Screens("fullplayer","Music Player" , Icons.Default.PlayArrow)
 
 }
