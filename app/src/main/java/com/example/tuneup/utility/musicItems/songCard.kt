@@ -28,16 +28,18 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import com.example.tuneup.model.searchResult
 import com.example.tuneup.utility.AudioPlayer
+import com.example.tuneup.viewmodels.musicViewModel
 
 @Composable
-fun songCard(searchResult: searchResult  , audioPlayer: AudioPlayer)
+fun songCard(searchResult: searchResult  , audioPlayer: AudioPlayer,musicViewModel: musicViewModel )
 {
+
     Card(Modifier
         .fillMaxWidth()
         .padding(8.dp)
         .clickable(enabled = true, onClick =
         {
-
+            musicViewModel.updatecurrentSong(searchResult)
             try {
                 audioPlayer.playAudio(searchResult.downloadUrl[4].url)
             } catch (e: Exception) {
@@ -55,7 +57,7 @@ fun songCard(searchResult: searchResult  , audioPlayer: AudioPlayer)
                         .width(56.dp)
                         .clip(RoundedCornerShape(8.dp)))
                 Spacer(Modifier.padding(8.dp))
-            Log.d("image",searchResult.image[0].url)
+            Log.d("image",searchResult.toString())
                 Column { Text(searchResult.name , maxLines = 1)
                     Text(searchResult.label , maxLines = 1) }
 

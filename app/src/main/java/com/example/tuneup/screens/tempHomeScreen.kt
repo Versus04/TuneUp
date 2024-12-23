@@ -50,11 +50,13 @@ fun tempo(musicViewModel: musicViewModel , modifier: Modifier)
     LazyColumn() {
         items(searchs)
         {y->
+
             Log.d("download" ,y.downloadUrl[4].url)
-            songCard(y  , audioPlayer = audioPlayer)
+            songCard(y  , audioPlayer = musicViewModel.audioPlayer , musicViewModel)
         }
     }}
-        }
+
+}
 
 
 
