@@ -31,7 +31,9 @@ import com.example.tuneup.utility.AudioPlayer
 import com.example.tuneup.viewmodels.musicViewModel
 
 @Composable
-fun songCard(searchResult: searchResult  , audioPlayer: AudioPlayer,musicViewModel: musicViewModel )
+fun songCard(searchResult: searchResult  ,
+             audioPlayer: AudioPlayer,musicViewModel: musicViewModel
+)
 {
 
     Card(Modifier
@@ -55,14 +57,15 @@ fun songCard(searchResult: searchResult  , audioPlayer: AudioPlayer,musicViewMod
                     modifier = Modifier
                         .height(56.dp)
                         .width(56.dp)
-                        .clip(RoundedCornerShape(8.dp)))
+                        .clip(RoundedCornerShape(8.dp)
+                        )
+                )
                 Spacer(Modifier.padding(8.dp))
-            Log.d("image",searchResult.toString())
-                Column { Text(searchResult.name , maxLines = 1)
-                    Text(searchResult.label , maxLines = 1) }
-
+                Column {
+                    Text(searchResult.name , maxLines = 1)
+                    Text(searchResult.label , maxLines = 1)
+                }
             }
-            //Text((searchResult.playCount/1000000).toString())
 
         }
     }

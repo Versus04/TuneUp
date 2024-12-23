@@ -58,7 +58,7 @@ fun MainScreen(viewModel: musicViewModel , modifier: Modifier)
     {
     Scaffold(bottomBar ={
         Column() {
-            if (currentSong != null && currentSong != viewModel.emptySearchResult) {
+            if (currentSong != viewModel.emptySearchResult) {
                 MiniPlayer(
                     viewModel.audioPlayer,
                     songName = currentSong.value.name,
@@ -69,18 +69,18 @@ fun MainScreen(viewModel: musicViewModel , modifier: Modifier)
                     playingvalue.value
                 )
             }
-            //smallMusicPlayer(x)
+
         NavigationBar { 
-            screenList.forEachIndexed { index , navi ->
+            screenList.forEachIndexed { index , navigation ->
                 NavigationBarItem(
                     selected = selectedScreen.intValue == index,
                     onClick = {
                         selectedScreen.intValue=index
-                        navController.navigate(navi.route)
+                        navController.navigate(navigation.route)
                               },
-                    icon = { Icon(imageVector = navi.icon , contentDescription = null) },
+                    icon = { Icon(imageVector = navigation.icon , contentDescription = null) },
                     enabled =true,
-                    label = { Text(text =navi.title) }
+                    label = { Text(text =navigation.title) }
                 )
             }
         }}

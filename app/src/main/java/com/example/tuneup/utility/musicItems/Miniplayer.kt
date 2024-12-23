@@ -50,7 +50,8 @@ fun MiniPlayer(
     Surface(
         modifier = modifier
             .fillMaxWidth()
-            .height(64.dp).clickable(enabled = true , onClick = {navController.navigate(Screens.FullMusicPlayer.route)}),
+            .height(64.dp).clickable(enabled = true ,
+                onClick = {navController.navigate(Screens.FullMusicPlayer.route)}),
         color = MaterialTheme.colorScheme.surface,
         tonalElevation = 4.dp
     ) {

@@ -39,8 +39,8 @@ fun FullMusicPlayer(searchResult: searchResult) {
                 modifier = Modifier.size(300.dp),
                 contentScale = ContentScale.Fit,
                 onError = { Log.e("FullMusicPlayer", "Error loading image: ${it.result.throwable}") },
-                onLoading = { /* You could show a loading indicator here */ },
-                onSuccess = { /* Image loaded successfully */ }
+                onLoading = {/*Show a loading Screen*/ },
+                onSuccess = {  }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
