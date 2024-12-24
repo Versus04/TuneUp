@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -31,30 +32,9 @@ import com.example.tuneup.viewmodels.musicViewModel
 @Composable
 fun tempo(musicViewModel: musicViewModel , modifier: Modifier)
 {
-    val songData by musicViewModel.songDto.collectAsStateWithLifecycle()
-    val searchs by musicViewModel.searchResult.collectAsState()
-    val searchsong by musicViewModel.searchSong.collectAsState()
-    //searchBar( searchsong, musicViewModel)
-    val context = LocalContext.current
-    val audioPlayer = remember { AudioPlayer(context) }
-
-    Column(modifier) {
-    Row()
-    {
-        TextField(value = searchsong , onValueChange = { musicViewModel.updateSearch(it) })
-        Button(onClick = { musicViewModel.searchSongs(searchsong)
-
-        }) {Text("search songs") }
+    Column(Modifier.fillMaxSize()){
+        Text("Hello this is the main screen ")
     }
-
-    LazyColumn() {
-        items(searchs)
-        {y->
-
-            Log.d("download" ,y.downloadUrl[4].url)
-            songCard(y  , audioPlayer = musicViewModel.audioPlayer , musicViewModel)
-        }
-    }}
 
 }
 

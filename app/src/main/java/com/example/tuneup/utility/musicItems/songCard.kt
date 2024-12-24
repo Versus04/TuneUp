@@ -25,14 +25,16 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.example.tuneup.model.searchResult
+import com.example.tuneup.screens.Screens
 import com.example.tuneup.utility.AudioPlayer
 import com.example.tuneup.viewmodels.musicViewModel
 
 @Composable
 fun songCard(searchResult: searchResult  ,
-             audioPlayer: AudioPlayer,musicViewModel: musicViewModel
+             audioPlayer: AudioPlayer,musicViewModel: musicViewModel, onclick : ()-> Unit ,navController: NavController
 )
 {
 
@@ -41,7 +43,9 @@ fun songCard(searchResult: searchResult  ,
         .padding(8.dp)
         .clickable(enabled = true, onClick =
         {
+            onclick()
             musicViewModel.updatecurrentSong(searchResult)
+            navController.navigate(Screens.FullMusicPlayer.route)
             try {
                 audioPlayer.playAudio(searchResult.downloadUrl[4].url)
             } catch (e: Exception) {

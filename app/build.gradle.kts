@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     kotlin("plugin.serialization") version "2.0.21"
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -45,9 +46,13 @@ dependencies {
     val coil_version = "3.0.4"
     val retrofit_version = "2.11.0"
     val media3_version = "1.2.1"
-    //implementation "androidx.compose.material:material-icons-extended:$compose_version"
+    val room_version = "2.6.1"
+    val icon_version = "1.7.6"
+    //Room
+    implementation("androidx.room:room-runtime:$room_version")
+    ksp("androidx.room:room-compiler:$room_version")
 
-    implementation("androidx.compose.material:material-icons-extended-android:1.7.6")
+    implementation("androidx.compose.material:material-icons-extended-android:${icon_version}")
     //coil
     implementation("io.coil-kt.coil3:coil-compose:${coil_version}")
     implementation("io.coil-kt.coil3:coil-network-okhttp:${coil_version}")

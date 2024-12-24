@@ -94,7 +94,7 @@ fun MainScreen(viewModel: musicViewModel , modifier: Modifier)
             }
             composable(Screens.SearchPage.route)
             {
-                searchScreen(modifier)
+                searchScreen( musicViewModel = viewModel,modifier ,navController)
             }
             composable(Screens.Library.route)
             {
@@ -106,7 +106,11 @@ fun MainScreen(viewModel: musicViewModel , modifier: Modifier)
             }
             composable(Screens.FullMusicPlayer.route)
             {
-                FullMusicPlayer(currentSong.value)
+                FullMusicPlayer(
+                    currentSong.value, audioPlayer = viewModel.audioPlayer,
+                    isPlaying =playingvalue.value,
+                    onclick ={viewModel.updatePlaying()},
+                )
             }
         }
 
