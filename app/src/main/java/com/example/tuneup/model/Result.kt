@@ -17,7 +17,7 @@ data class searchResult(
     val image: List<ImageXX>,
     val label: String,
     val language: String,
-    val lyricsId: Any,
+    val lyricsId: Any?,
     val name: String,
     val playCount: Int,
     val releaseDate: Any,

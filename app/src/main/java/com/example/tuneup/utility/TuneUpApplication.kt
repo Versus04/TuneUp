@@ -11,11 +11,14 @@ class TuneUpApplication : Application() {
             private set
         lateinit var appContext: Context
             private set
+        lateinit var  audioPlayer: AudioPlayer
+            private set
     }
 
     override fun onCreate() {
         super.onCreate()
         appContext = applicationContext
         db = Room.databaseBuilder(this, SongDatabase::class.java, "song-database").build()
+        audioPlayer = AudioPlayer.getInstance()
     }
 }

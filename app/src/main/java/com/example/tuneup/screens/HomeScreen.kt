@@ -42,12 +42,13 @@ import androidx.navigation.compose.rememberNavController
 import coil3.compose.AsyncImage
 import com.example.tuneup.utility.AudioPlayer
 import com.example.tuneup.utility.musicItems.MiniPlayer
+import com.example.tuneup.viewmodels.HomeViewModel
 import com.example.tuneup.viewmodels.LibraryViewModel
 import com.example.tuneup.viewmodels.musicViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun MainScreen(viewModel: musicViewModel, libraryViewModel: LibraryViewModel , modifier: Modifier)
+fun MainScreen(homeViewModel: HomeViewModel , viewModel: musicViewModel, libraryViewModel: LibraryViewModel , modifier: Modifier)
 {
     val navController = rememberNavController()
     var selectedScreen = remember { mutableIntStateOf(0) }
@@ -55,6 +56,7 @@ fun MainScreen(viewModel: musicViewModel, libraryViewModel: LibraryViewModel , m
     val currentSong = viewModel.currentSong.collectAsState()
     val x = currentSong.value
     val playingvalue = viewModel.isPlaying.collectAsState()
+
     Box()
     {
     Scaffold(bottomBar ={
@@ -91,7 +93,11 @@ fun MainScreen(viewModel: musicViewModel, libraryViewModel: LibraryViewModel , m
         {
             composable(Screens.HomeScreen.route)
             {
-                tempo(musicViewModel = viewModel,modifier = Modifier.padding(paddingValues))
+                Home(
+                    homeViewModel = homeViewModel, modifier = Modifier.padding(paddingValues),
+                    navController = navController,
+                    musicViewModel = viewModel
+                )
             }
             composable(Screens.SearchPage.route)
             {
@@ -99,7 +105,7 @@ fun MainScreen(viewModel: musicViewModel, libraryViewModel: LibraryViewModel , m
             }
             composable(Screens.Library.route)
             {
-                libraryScreen(libraryViewModel = libraryViewModel ,modifier)
+                libraryScreen(libraryViewModel = libraryViewModel )
             }
             composable(Screens.Settings.route)
             {

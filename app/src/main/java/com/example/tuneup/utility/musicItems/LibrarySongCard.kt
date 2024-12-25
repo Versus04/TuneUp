@@ -1,70 +1,110 @@
 package com.example.tuneup.utility.musicItems
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MusicNote
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+
 import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
+import com.example.tuneup.model.Data
 import com.example.tuneup.model.searchResult
 import com.example.tuneup.screens.Screens
 import com.example.tuneup.utility.AudioPlayer
 import com.example.tuneup.viewmodels.musicViewModel
 
-
-    @Composable
-    fun LibrarySongCard(searchResult: searchResult  ,
-                 audioPlayer: AudioPlayer,musicViewModel: musicViewModel, onclick : ()-> Unit ,navController: NavController
-    )
-    {
-
-        Card(Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-            .clickable(enabled = true, onClick =
-            {
-                onclick()
-                musicViewModel.updatecurrentSong(searchResult)
+@Composable
+fun LibrarySongCard(
+    searchResult: Data,
+    audioPlayer: AudioPlayer,
+    modifier: Modifier = Modifier,
+    navController: NavController,
+   musicViewModel: musicViewModel
+) {
+    Card(
+        modifier = modifier
+            .width(200.dp)
+            .height(200.dp)
+            .padding(4.dp)
+            .clickable {
+                audioPlayer.playAudio(searchResult.downloadUrl[4].url)
                 navController.navigate(Screens.FullMusicPlayer.route)
-                try {
-                    audioPlayer.playAudio(searchResult.downloadUrl[4].url)
-                } catch (e: Exception) {
-                    Log.d("playingerror", e.toString())
-                }
-            })) {
-            Column(Modifier.padding(8.dp) , verticalArrangement = Arrangement.Center) {
-                Row(horizontalArrangement = Arrangement.SpaceEvenly){
+                 musicViewModel.updatecurrentSong(searchResult.toSearchResult())
+            },
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
+        Box(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(searchResult.image[2].url)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = "Song Artwork",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop,
 
-                    AsyncImage(model = searchResult.image[2].url ,
-                        contentDescription = null ,
-                        contentScale = ContentScale.Crop ,
-                        modifier = Modifier
-                            .height(56.dp)
-                            .width(56.dp)
-                            .clip(RoundedCornerShape(8.dp)
-                            )
+            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        Brush.verticalGradient(
+                            colors = listOf(
+                                Color.Transparent,
+                                Color.Black.copy(alpha = 0.7f)
+                            ),
+                            startY = 100f
+                        )
                     )
-                    Spacer(Modifier.padding(8.dp))
-                    Column {
-                        Text(searchResult.name , maxLines = 1)
-                        Text(searchResult.label , maxLines = 1)
-                    }
-                }
+            )
 
+            // Song information
+            Column(
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(8.dp)
+            ) {
+                Text(
+                    text = searchResult.name ?: "Unknown",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = Color.White,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                
+                /*Text(
+                    text = searchResult.artists.primary[1] ?: "Unknown Artist",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.White.copy(alpha = 0.7f),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                ) */
             }
+
+
+
         }
     }
+}
+
+

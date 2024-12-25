@@ -34,8 +34,8 @@ class musicViewModel : ViewModel()
     val songDto : StateFlow<List<Data>> = _SongDto.asStateFlow()
     private var _searchSong = MutableStateFlow("")
     var searchSong =_searchSong.asStateFlow()
-    val context = TuneUpApplication.appContext
-    val audioPlayer = AudioPlayer(context)
+
+    val audioPlayer = TuneUpApplication.audioPlayer
     val emptySearchResult = searchResult(
         album = Album(
             id = "31405540",
@@ -65,7 +65,7 @@ class musicViewModel : ViewModel()
         downloadUrl = listOf(
             DownloadUrl(
                 quality = "320kbps",
-                url = "https://aac.saavncdn.com/295/7f1862c1f082f1fe2405d6443ca9ebda_320.mp4"
+                url = "https://aac.saavncdn.com/820/3d732a9092272f172cd6a25cab3244d6_320.mp4"
             )
         ),
         duration = 295,
@@ -75,7 +75,7 @@ class musicViewModel : ViewModel()
         image = listOf(
             ImageXX(
                 quality = "50x50",
-                url = "https://c.saavncdn.com/295/Teri-Jogan-Hindi-2013-20211209130606-50x50.jpg"
+                url = "https://c.saavncdn.com/820/Tera-Zikr-Hindi-2017-20171108125619-500x500.jpg"
             )
         ),
         label = "Rave Music",
@@ -83,7 +83,7 @@ class musicViewModel : ViewModel()
         lyricsId = 111,
         name = "Main Banke Hawa",
         playCount = 15962,
-        releaseDate = 111,
+        releaseDate = "111",
         type = "song",
         url = "https://www.jiosaavn.com/song/main-banke-hawa/ESYjaRYEBWE",
         year = "2013"
@@ -92,26 +92,7 @@ class musicViewModel : ViewModel()
     val currentSong : StateFlow<searchResult> = _currentSong.asStateFlow()
     private val _searchResult = MutableStateFlow<List<searchResult>>(emptyList())
     val searchResult : StateFlow<List<searchResult>> = _searchResult
-    fun getSong()
-    {
-        viewModelScope.launch()
-        {
-            try {
-                val responses = MusicApiService.retrofitService.getsongs("3IoDK8qI")
-                if (responses.isSuccessful)
-                {
-                    responses.body()?.let { musicresponse ->
-                        _SongDto.value=musicresponse.data
 
-                    }
-                }
-            }
-            catch (e : Exception)
-            {
-                Log.d("lol" , e.toString())
-            }
-        }
-    }
     fun searchSongs(searchResult: String)
     {
         viewModelScope.launch()

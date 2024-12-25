@@ -1,6 +1,7 @@
 package com.example.tuneup.utility
 
 import android.content.Context
+import androidx.lifecycle.ViewModelProvider.NewInstanceFactory.Companion.instance
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
@@ -16,7 +17,15 @@ class AudioPlayer(private val context: Context) {
     init {
         initializePlayer()
     }
+    companion object {
+        @Volatile
+        private var instance: AudioPlayer? = null
 
+        fun getInstance(): AudioPlayer {
+            return instance ?: synchronized(this) {
+                instance ?: AudioPlayer(context = TuneUpApplication.appContext).also { instance = it }
+            }
+        }}
     private fun initializePlayer() {
         player = ExoPlayer.Builder(context).build().apply {
             playWhenReady = true
