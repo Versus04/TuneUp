@@ -136,13 +136,7 @@ class musicViewModel : ViewModel()
     }
     fun updatePlaying()
     {
-        if(_isplaying.value)
-        {
-         _isplaying.value=false
-        }
-        else{
-            _isplaying.value=true
-        }
+        _isplaying.value = !_isplaying.value
     }
     fun updatecurrentSong (searchResult: searchResult)
     {

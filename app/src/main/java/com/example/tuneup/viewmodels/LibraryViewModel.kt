@@ -28,7 +28,7 @@ class LibraryViewModel : ViewModel() {
             dao.getlastSession().collect{
                 entities ->
                 _ids.value=entities
-                Log.d("entitys", _ids.value.toString())
+
 
             }
 
@@ -45,6 +45,7 @@ class LibraryViewModel : ViewModel() {
                     if (responses.isSuccessful) {
                         responses.body()?.let { musicresponse ->
                             newSongList.addAll(musicresponse.data)
+                            Log.d("entitys", musicresponse.data.toString())
 
                         }
                     }
