@@ -29,87 +29,84 @@ import com.example.tuneup.viewmodels.LibraryViewModel
 import com.example.tuneup.viewmodels.musicViewModel
 
 @Composable
-fun Home(musicViewModel: musicViewModel ,
+fun Home(
+    musicViewModel: musicViewModel,
     homeViewModel: HomeViewModel,
     modifier: Modifier = Modifier,
     navController: NavController
 ) {
-
-    val lastSession by homeViewModel.songDto.collectAsState()
+    val lastSession by homeViewModel.songDto.collectAsStateWithLifecycle()
     val audioPlayer = TuneUpApplication.audioPlayer
-    var searchQuery by remember { mutableStateOf("") }
 
-    Box(modifier.fillMaxSize()) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            // Search Bar
-
-            // Welcome Section
+    LazyColumn(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(0.dp),
+        contentPadding = PaddingValues(0.dp)
+    ) {
+        item {
             Text(
-                "Welcome Back!", 
+                "Welcome Back!",
                 style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier.padding(vertical = 8.dp)
+                modifier = Modifier.padding(bottom = 8.dp)
             )
+        }
 
-            // Recently Played Section
-            SectionTitle("Recently Played")
+        item {
+            Text(
+                "Recently Played",
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(bottom = 4.dp)
+            )
+        }
+
+        item {
             if (lastSession.isEmpty()) {
                 EmptyStateMessage("No recently played songs")
             } else {
                 LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp)
                 ) {
                     items(lastSession) { song ->
-                        LibrarySongCard(song, audioPlayer ,modifier ,navController ,musicViewModel)
+                        LibrarySongCard(
+                            audioPlayer = audioPlayer,
+                            modifier = Modifier,
+                            navController = navController,
+                            musicViewModel = musicViewModel,
+                            searchResult = song
+                        )
                     }
                 }
             }
-
-            // Most Played Section
-            SectionTitle("Most Played")
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                // TODO: Replace with actual most played songs
-                items(5) {
-                    PlaceholderSongCard()
+        }
+        item {
+            Column() {
+                // Most Played Section
+                SectionTitle("Most Played")
+                LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    items(5) { PlaceholderSongCard() }
                 }
-            }
 
-            // Recommended Section
-            SectionTitle("Recommended for You")
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                // TODO: Replace with actual recommendations
-                items(5) {
-                    PlaceholderSongCard()
+                // Recommended Section
+                SectionTitle("Recommended for You")
+                LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    items(5) { PlaceholderSongCard() }
                 }
-            }
 
-            // New Releases Section
-            SectionTitle("New Releases")
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                // TODO: Replace with actual new releases
-                items(5) {
-                    PlaceholderSongCard()
+                // New Releases Section
+                SectionTitle("New Releases")
+                LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    items(5) { PlaceholderSongCard() }
                 }
-            }
 
-            // Your Playlists Section
-            SectionTitle("Your Playlists")
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                // TODO: Replace with actual playlists
-                items(3) {
-                    PlaylistCard()
+                // Playlists Section
+                SectionTitle("Your Playlists")
+                LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    items(3) { PlaylistCard() }
                 }
             }
         }
@@ -121,7 +118,7 @@ private fun SectionTitle(title: String) {
     Text(
         text = title,
         style = MaterialTheme.typography.titleLarge,
-        modifier = Modifier.padding(vertical = 8.dp)
+        modifier = Modifier.padding(vertical = 4.dp)
     )
 }
 
@@ -130,7 +127,7 @@ private fun EmptyStateMessage(message: String) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(100.dp),
+            .height(80.dp),
         contentAlignment = Alignment.Center
     ) {
         Text(
@@ -145,9 +142,9 @@ private fun EmptyStateMessage(message: String) {
 private fun PlaceholderSongCard() {
     Card(
         modifier = Modifier
-            .width(150.dp)
-            .height(200.dp)
-            .padding(4.dp)
+            .width(130.dp)
+            .height(180.dp)
+            .padding(2.dp)
     ) {
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -162,23 +159,23 @@ private fun PlaceholderSongCard() {
 private fun PlaylistCard() {
     Card(
         modifier = Modifier
-            .width(200.dp)
-            .height(120.dp)
-            .padding(4.dp)
+            .width(180.dp)
+            .height(100.dp)
+            .padding(2.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(12.dp),
+                .padding(8.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Icon(
-                imageVector = Icons.Default.Search, // Replace with appropriate playlist icon
+                imageVector = Icons.Default.Search,
                 contentDescription = "Playlist",
-                modifier = Modifier.size(32.dp)
+                modifier = Modifier.size(28.dp)
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(4.dp))
             Text(
                 "Playlist Name",
                 style = MaterialTheme.typography.titleMedium

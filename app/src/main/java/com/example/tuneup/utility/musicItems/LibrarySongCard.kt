@@ -47,6 +47,7 @@ fun LibrarySongCard(
                 audioPlayer.playAudio(searchResult.downloadUrl[4].url)
                 navController.navigate(Screens.FullMusicPlayer.route)
                  musicViewModel.updatecurrentSong(searchResult.toSearchResult())
+                musicViewModel.updatePlaying()
             },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
