@@ -16,16 +16,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.tuneup.screens.MainScreen
 import com.example.tuneup.screens.tempo
 import com.example.tuneup.ui.theme.TuneUpTheme
+import com.example.tuneup.viewmodels.LibraryViewModel
 import com.example.tuneup.viewmodels.musicViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val viewModel : musicViewModel by viewModels()
+        val libraryViewModel : LibraryViewModel by viewModels()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             TuneUpTheme {
-                MainScreen(viewModel, modifier = Modifier.statusBarsPadding())
+                MainScreen(viewModel, modifier = Modifier.statusBarsPadding() , libraryViewModel = libraryViewModel)
             }
         }
     }

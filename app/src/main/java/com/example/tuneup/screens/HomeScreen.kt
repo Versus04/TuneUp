@@ -42,11 +42,12 @@ import androidx.navigation.compose.rememberNavController
 import coil3.compose.AsyncImage
 import com.example.tuneup.utility.AudioPlayer
 import com.example.tuneup.utility.musicItems.MiniPlayer
+import com.example.tuneup.viewmodels.LibraryViewModel
 import com.example.tuneup.viewmodels.musicViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun MainScreen(viewModel: musicViewModel , modifier: Modifier)
+fun MainScreen(viewModel: musicViewModel, libraryViewModel: LibraryViewModel , modifier: Modifier)
 {
     val navController = rememberNavController()
     var selectedScreen = remember { mutableIntStateOf(0) }
@@ -98,7 +99,7 @@ fun MainScreen(viewModel: musicViewModel , modifier: Modifier)
             }
             composable(Screens.Library.route)
             {
-                libraryScreen(modifier)
+                libraryScreen(libraryViewModel = libraryViewModel ,modifier)
             }
             composable(Screens.Settings.route)
             {

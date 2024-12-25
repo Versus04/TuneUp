@@ -51,7 +51,7 @@ dependencies {
     //Room
     implementation("androidx.room:room-runtime:$room_version")
     ksp("androidx.room:room-compiler:$room_version")
-
+    implementation("androidx.room:room-ktx:2.6.1")
     implementation("androidx.compose.material:material-icons-extended-android:${icon_version}")
     //coil
     implementation("io.coil-kt.coil3:coil-compose:${coil_version}")

@@ -22,10 +22,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import androidx.compose.ui.platform.LocalContext
+import com.example.tuneup.model.RoomEntity
 import com.example.tuneup.utility.TuneUpApplication
 
 class musicViewModel : ViewModel()
 {
+    private val db  = TuneUpApplication.db.songDao()
     private val _isplaying = MutableStateFlow<Boolean>(false)
     val isPlaying : StateFlow<Boolean> = _isplaying.asStateFlow()
     private val _SongDto = MutableStateFlow<List<Data>>(emptyList())
@@ -145,6 +147,10 @@ class musicViewModel : ViewModel()
     fun updatecurrentSong (searchResult: searchResult)
     {
         _currentSong.value=searchResult
+        viewModelScope.launch()
+        {
+            db.insert(RoomEntity(searchResult.id))
+        }
         Log.d("newsong" ,searchResult.name)
     }
 

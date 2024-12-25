@@ -15,8 +15,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class LibraryViewModel : ViewModel() {
-    private val db = TuneUpApplication.db
-    private val dao = db.songDao()
+    private val db = TuneUpApplication.db.songDao()
+    private val dao = db
     private val _ids = MutableStateFlow< List<RoomEntity>>(emptyList())
     val ids : StateFlow<List<RoomEntity>> = _ids
     private val _SongDto = MutableStateFlow<List<Data>>(emptyList())
@@ -28,6 +28,7 @@ class LibraryViewModel : ViewModel() {
             dao.getlastSession().collect{
                 entities ->
                 _ids.value=entities
+                Log.d("entitys", _ids.value.toString())
 
             }
 
@@ -44,7 +45,7 @@ class LibraryViewModel : ViewModel() {
                     if (responses.isSuccessful) {
                         responses.body()?.let { musicresponse ->
                             newSongList.addAll(musicresponse.data)
-                            Log.d("entitys", musicresponse.data.toString())
+
                         }
                     }
                 }
