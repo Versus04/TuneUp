@@ -18,8 +18,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.example.tuneup.utility.TuneUpApplication
 
 @Composable
 fun libraryScreen(libraryViewModel: LibraryViewModel) {
+    val playlist by libraryViewModel.playlist.collectAsState()
+    LazyColumn() {
+        items(playlist)
+        {x->
+            Text(x.songsIds)
+        }
+    }
+
 
 }

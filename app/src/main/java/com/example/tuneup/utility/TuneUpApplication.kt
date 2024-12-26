@@ -18,7 +18,7 @@ class TuneUpApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         appContext = applicationContext
-        db = Room.databaseBuilder(this, SongDatabase::class.java, "song-database").build()
+        db = Room.databaseBuilder(this, SongDatabase::class.java, "song-database").fallbackToDestructiveMigration().build()
         audioPlayer = AudioPlayer.getInstance()
     }
 }
