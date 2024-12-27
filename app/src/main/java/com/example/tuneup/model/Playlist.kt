@@ -8,5 +8,5 @@ data class Playlist(
     @PrimaryKey
     val id :  Int,
     val name : String,
-    val songsIds : String
+    val songsIds : String = ""
 )

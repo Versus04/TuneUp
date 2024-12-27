@@ -26,6 +26,13 @@ class AudioPlayer(private val context: Context) {
                 instance ?: AudioPlayer(context = TuneUpApplication.appContext).also { instance = it }
             }
         }}
+    fun getCurrentPosition(): Long {
+        return player?.currentPosition ?: 0L
+    }
+
+    fun getDuration(): Long {
+        return player?.duration ?: 0L
+    }
     private fun initializePlayer() {
         player = ExoPlayer.Builder(context).build().apply {
             playWhenReady = true
